@@ -12,13 +12,27 @@
         <nav>
             <ul>
                 <li><a href="#countries">Countries</a></li>
-                <li><a href="">Language</a></li>
+                <li><a href="#" id="languageBtn">Language</a></li>
                 <li><a href="#account">Account</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
     <div class="container"></div>
+    <!-- Language Modal -->
+    <div id="languageModal" class="modal">
+        <div class="modal-content">
+            <h3>Select Language</h3>
+            <form id="languageForm">
+                <label><input type="radio" name="language" value="en" checked> English</label><br>
+                <label><input type="radio" name="language" value="ru"> Русский</label><br>
+                <label><input type="radio" name="language" value="hy"> Հայերեն</label><br><br>
+                <button type="submit">Apply</button>
+                <button type="button" id="closeModal">Cancel</button>
+            </form>
+        </div>
+    </div>
+
     <footer>
         <p id="fp">ALL IS GOOD ©</p>
     </footer>
@@ -26,3 +40,4 @@
 </body>
 
 </html>
+
