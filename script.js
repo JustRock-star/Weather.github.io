@@ -1,5 +1,5 @@
 let container = document.querySelector('.container');
-let currentLanguage = 'en';
+let currentLanguage = 'en'; // по умолчанию English
 
 const translations = {
   en: {
@@ -37,67 +37,47 @@ const translations = {
   }
 };
 
-// Словарь перевода погодных условий
+// Переводы погодных условий для армянского, потому что API не поддерживает lang=hy
 const weatherConditionTranslations = {
-  ru: {
-    "Clear": "Ясно",
-    "Sunny": "Солнечно",
-    "Partly cloudy": "Переменная облачность",
-    "Overcast": "Пасмурно",
-    "Cloudy": "Облачно",
-    "Light rain": "Легкий дождь",
-    "Moderate rain": "Умеренный дождь",
-    "Heavy rain": "Сильный дождь",
-    "Mist": "Туман",
-    "Patchy rain possible": "Возможен кратковременный дождь",
-    "Patchy snow possible": "Возможен кратковременный снег",
-    "Blizzard": "Метель",
-    "Fog": "Туман",
-    "Thunderstorm": "Гроза",
-    "Freezing fog": "Ледяной туман"
-  },
   hy: {
     "Clear": "Մաքուր",
     "Sunny": "Արևոտ",
     "Partly cloudy": "Մասամբ ամպամած",
-    "Overcast": "Մառախլապատ",
     "Cloudy": "Ամպամած",
-    "Light rain": "Թեթև անձրև",
-    "Moderate rain": "Միջին անձրև",
-    "Heavy rain": "Արագ անձրև",
+    "Overcast": "Մառախլապատ",
     "Mist": "Մառախուղ",
     "Patchy rain possible": "Հնարավոր է թեթև անձրև",
     "Patchy snow possible": "Հնարավոր է թեթև ձյուն",
+    "Thunderstorm": "Ամպրոպ",
     "Blizzard": "Ձյան փոթորիկ",
     "Fog": "Մառախուղ",
-    "Thunderstorm": "Ամպրոպ",
-    "Freezing fog": "Սառցակալած մառախուղ"
+    "Light rain": "Թեթև անձրև",
+    "Heavy rain": "Արագ անձրև",
+    "Showers": "Ջրառատ անձրև",
+    // Добавляй по необходимости
   }
 };
 
 function fetchWeather() {
-  fetch(`https://api.weatherapi.com/v1/forecast.json?key=bc2b6d561b0c4c919e1113322252904&q=Yerevan&days=1&aqi=no&alerts=no`)
-    .then(response => response.json())
-    .then(data => {
-      fun1H(data.forecast.forecastday[0].hour);
-    })
-    .catch(() => {
-      container.innerHTML = `<p>Ошибка загрузки данных</p>`;
-    });
-}
+  // Для armenian - lang= en, т.к. API не поддерживает hy
+  const apiLang = currentLanguage === 'hy' ? 'en' : currentLanguage;
 
-function translateCondition(text) {
-  if (currentLanguage === 'en') return text;
-  const dict = weatherConditionTranslations[currentLanguage];
-  return dict && dict[text] ? dict[text] : text;
+  fetch(`https://api.weatherapi.com/v1/forecast.json?key=bc2b6d561b0c4c919e1113322252904&q=Yerevan&days=1&aqi=no&alerts=no&lang=${apiLang}`)
+    .then(response => response.json())
+    .then(data => fun1H(data.forecast.forecastday[0].hour));
 }
 
 function fun1H(hours) {
   const t = translations[currentLanguage];
   container.innerHTML = `<h2 class="title">${t.weatherTitle}</h2>`;
-  
+
   hours.forEach(hour => {
-    const conditionText = translateCondition(hour.condition.text);
+    let conditionText = hour.condition.text;
+
+    // Для армянского языка делаем ручной перевод условий
+    if (currentLanguage === 'hy') {
+      conditionText = weatherConditionTranslations.hy[conditionText] || conditionText;
+    }
 
     let el = document.createElement('div');
     el.classList.add('hour-forecast');
@@ -118,7 +98,10 @@ function fun1H(hours) {
   });
 }
 
+// Загружаем погоду при запуске
 fetchWeather();
+
+// --- Управление языком и модальным окном ---
 
 const languageBtn = document.getElementById('languageBtn');
 const modal = document.getElementById('languageModal');
@@ -129,7 +112,11 @@ languageBtn.addEventListener('click', e => {
   e.preventDefault();
   modal.style.display = 'block';
 });
-closeModal.addEventListener('click', () => modal.style.display = 'none');
+
+closeModal.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
+
 window.addEventListener('click', e => {
   if (e.target == modal) modal.style.display = 'none';
 });
@@ -150,7 +137,3 @@ function applyLanguage(labels) {
   navLinks[3].textContent = labels.contact;
   document.getElementById('fp').textContent = labels.footer;
 }
-
-
-
-
