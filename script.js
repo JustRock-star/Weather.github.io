@@ -37,6 +37,7 @@ const translations = {
   }
 };
 
+// Словарь перевода погодных условий
 const weatherConditionTranslations = {
   ru: {
     "Clear": "Ясно",
@@ -51,7 +52,9 @@ const weatherConditionTranslations = {
     "Patchy rain possible": "Возможен кратковременный дождь",
     "Patchy snow possible": "Возможен кратковременный снег",
     "Blizzard": "Метель",
-    // Можно добавить больше по необходимости
+    "Fog": "Туман",
+    "Thunderstorm": "Гроза",
+    "Freezing fog": "Ледяной туман"
   },
   hy: {
     "Clear": "Մաքուր",
@@ -66,17 +69,20 @@ const weatherConditionTranslations = {
     "Patchy rain possible": "Հնարավոր է թեթև անձրև",
     "Patchy snow possible": "Հնարավոր է թեթև ձյուն",
     "Blizzard": "Ձյան փոթորիկ",
-    // Добавляй по мере необходимости
+    "Fog": "Մառախուղ",
+    "Thunderstorm": "Ամպրոպ",
+    "Freezing fog": "Սառցակալած մառախուղ"
   }
 };
 
 function fetchWeather() {
-  fetch(`https://api.weatherapi.com/v1/forecast.json?key=bc2b6d561b0c4c919e1113322252904&q=Yerevan&days=1&aqi=no&alerts=no&lang=${currentLanguage}`)
+  fetch(`https://api.weatherapi.com/v1/forecast.json?key=bc2b6d561b0c4c919e1113322252904&q=Yerevan&days=1&aqi=no&alerts=no`)
     .then(response => response.json())
-    .then(data => fun1H(data.forecast.forecastday[0].hour))
-    .catch(err => {
+    .then(data => {
+      fun1H(data.forecast.forecastday[0].hour);
+    })
+    .catch(() => {
       container.innerHTML = `<p>Ошибка загрузки данных</p>`;
-      console.error(err);
     });
 }
 
@@ -89,8 +95,10 @@ function translateCondition(text) {
 function fun1H(hours) {
   const t = translations[currentLanguage];
   container.innerHTML = `<h2 class="title">${t.weatherTitle}</h2>`;
+  
   hours.forEach(hour => {
     const conditionText = translateCondition(hour.condition.text);
+
     let el = document.createElement('div');
     el.classList.add('hour-forecast');
 
@@ -142,6 +150,7 @@ function applyLanguage(labels) {
   navLinks[3].textContent = labels.contact;
   document.getElementById('fp').textContent = labels.footer;
 }
+
 
 
 
