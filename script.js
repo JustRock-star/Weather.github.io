@@ -1,6 +1,7 @@
 let container = document.querySelector('.container');
-let currentLanguage = 'en'; // по умолчанию English
+let currentLanguage = 'en';
 
+// Тексты интерфейса
 const translations = {
   en: {
     countries: "Countries",
@@ -37,56 +38,61 @@ const translations = {
   }
 };
 
+// Ручной перевод погодных условий (если API не перевёл)
+const manualConditions = {
+  ru: {
+    "Clear": "Ясно",
+    "Partly cloudy": "Переменная облачность",
+    "Overcast": "Пасмурно",
+    "Cloudy": "Облачно"
+  },
+  hy: {
+    "Clear": "Մաքուր",
+    "Partly cloudy": "Մասամբ ամպամած",
+    "Overcast": "Մառախլապատ",
+    "Cloudy": "Ամպամած"
+  }
+};
+
+// Получение переведённого текста условия
+function getConditionText(originalText) {
+  if (currentLanguage === 'en') return originalText;
+  return manualConditions[currentLanguage][originalText] || originalText;
+}
+
+// Загрузка погоды
 function fetchWeather() {
   fetch(`https://api.weatherapi.com/v1/forecast.json?key=bc2b6d561b0c4c919e1113322252904&q=Yerevan&days=1&aqi=no&alerts=no&lang=${currentLanguage}`)
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => fun1H(data.forecast.forecastday[0].hour));
 }
 
+// Рендер погоды
 function fun1H(hours) {
   const t = translations[currentLanguage];
   container.innerHTML = `<h2 class="title">${t.weatherTitle}</h2>`;
   hours.forEach(hour => {
-    let el = document.createElement('div');
+    const conditionText = getConditionText(hour.condition.text);
+    const el = document.createElement('div');
     el.classList.add('hour-forecast');
 
     el.innerHTML = `
       <div class="forecast-time"><strong>${hour.time.split(' ')[1]}</strong></div>
       <div class="forecast-temp">${hour.temp_c}°C</div>
-      <div class="forecast-condition">${hour.condition.text}</div>
+      <div class="forecast-condition">${conditionText}</div>
       <div class="forecast-details">
-        <p>${t.wind}: ${hour.wind_kph} km/h</p>
-        <p>${t.humidity}: ${hour.humidity}%</p>
-        <p>${t.rain}: ${hour.chance_of_rain}%</p>
+          <p>${t.wind}: ${hour.wind_kph} km/h</p>
+          <p>${t.humidity}: ${hour.humidity}%</p>
+          <p>${t.rain}: ${hour.chance_of_rain}%</p>
       </div>
-      <img class="forecast-icon" src="${hour.condition.icon}" alt="${hour.condition.text}" />
+      <img class="forecast-icon" src="${hour.condition.icon}" alt="${conditionText}" />
     `;
 
     container.appendChild(el);
   });
 }
 
-// Загружаем погоду при запуске
-fetchWeather();
-
-// Код для переключения языка из модального окна (как раньше)
-const languageBtn = document.getElementById('languageBtn');
-const modal = document.getElementById('languageModal');
-const closeModal = document.getElementById('closeModal');
-const languageForm = document.getElementById('languageForm');
-
-languageBtn.addEventListener('click', e => { e.preventDefault(); modal.style.display = 'block'; });
-closeModal.addEventListener('click', () => modal.style.display = 'none');
-window.addEventListener('click', e => { if (e.target == modal) modal.style.display = 'none'; });
-
-languageForm.addEventListener('submit', e => {
-  e.preventDefault();
-  currentLanguage = languageForm.language.value;
-  applyLanguage(translations[currentLanguage]);
-  fetchWeather();
-  modal.style.display = 'none';
-});
-
+// UI: Перевод интерфейса
 function applyLanguage(labels) {
   const navLinks = document.querySelectorAll('nav ul li a');
   navLinks[0].textContent = labels.countries;
@@ -96,7 +102,38 @@ function applyLanguage(labels) {
   document.getElementById('fp').textContent = labels.footer;
 }
 
+// Модальное окно
+const languageBtn = document.getElementById('languageBtn');
+const modal = document.getElementById('languageModal');
+const closeModal = document.getElementById('closeModal');
+const languageForm = document.getElementById('languageForm');
 
+// Открытие окна
+languageBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  modal.style.display = 'block';
+});
 
+// Закрытие окна
+closeModal.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
+window.addEventListener('click', (e) => {
+  if (e.target == modal) {
+    modal.style.display = 'none';
+  }
+});
 
+// Применение языка
+languageForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const selectedLang = languageForm.language.value;
+  currentLanguage = selectedLang;
 
+  applyLanguage(translations[currentLanguage]);
+  fetchWeather();
+  modal.style.display = 'none';
+});
+
+// Старт
+fetchWeather();
