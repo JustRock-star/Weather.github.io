@@ -27,4 +27,74 @@ function fun1H(hours) {
 
         container.appendChild(el)
     })
+
+}
+const languageBtn = document.getElementById('languageBtn');
+const modal = document.getElementById('languageModal');
+const closeModal = document.getElementById('closeModal');
+const languageForm = document.getElementById('languageForm');
+
+// Показать модальное окно
+languageBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    modal.style.display = 'block';
+});
+
+// Закрыть модальное окно
+closeModal.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
+
+// Закрыть при клике вне окна
+window.addEventListener('click', (e) => {
+    if (e.target == modal) {
+        modal.style.display = 'none';
+    }
+});
+
+// Применить выбранный язык
+languageForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const selectedLang = languageForm.language.value;
+
+    switch (selectedLang) {
+        case 'en':
+            applyLanguage({
+                countries: "Countries",
+                language: "Language",
+                account: "Account",
+                contact: "Contact",
+                footer: "ALL IS GOOD ©"
+            });
+            break;
+        case 'ru':
+            applyLanguage({
+                countries: "Страны",
+                language: "Язык",
+                account: "Аккаунт",
+                contact: "Контакт",
+                footer: "ВСЁ ХОРОШО ©"
+            });
+            break;
+        case 'hy':
+            applyLanguage({
+                countries: "Երկրներ",
+                language: "Լեզու",
+                account: "Հաշիվ",
+                contact: "Կապ",
+                footer: "ԱՄԵՆ ԻՆՉ ԼԱՎ Է ©"
+            });
+            break;
+    }
+
+    modal.style.display = 'none';
+});
+
+function applyLanguage(labels) {
+    const navLinks = document.querySelectorAll('nav ul li a');
+    navLinks[0].textContent = labels.countries;
+    navLinks[1].textContent = labels.language;
+    navLinks[2].textContent = labels.account;
+    navLinks[3].textContent = labels.contact;
+    document.getElementById('fp').textContent = labels.footer;
 }
