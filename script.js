@@ -1,5 +1,5 @@
 let container = document.querySelector('.container');
-let currentLanguage = 'en'; // по умолчанию English
+let currentLanguage = 'en';
 
 const translations = {
   en: {
@@ -37,25 +37,36 @@ const translations = {
   }
 };
 
-// Ручной словарь переводов погодных условий для армянского и русского
-const manualConditions = {
+const weatherConditionTranslations = {
   ru: {
     "Clear": "Ясно",
+    "Sunny": "Солнечно",
     "Partly cloudy": "Переменная облачность",
     "Overcast": "Пасмурно",
     "Cloudy": "Облачно",
-    "Sunny": "Солнечно",
     "Light rain": "Легкий дождь",
-    // добавляй по необходимости
+    "Moderate rain": "Умеренный дождь",
+    "Heavy rain": "Сильный дождь",
+    "Mist": "Туман",
+    "Patchy rain possible": "Возможен кратковременный дождь",
+    "Patchy snow possible": "Возможен кратковременный снег",
+    "Blizzard": "Метель",
+    // Можно добавить больше по необходимости
   },
   hy: {
     "Clear": "Մաքուր",
+    "Sunny": "Արևոտ",
     "Partly cloudy": "Մասամբ ամպամած",
     "Overcast": "Մառախլապատ",
     "Cloudy": "Ամպամած",
-    "Sunny": "Արևոտ",
     "Light rain": "Թեթև անձրև",
-    // добавляй по необходимости
+    "Moderate rain": "Միջին անձրև",
+    "Heavy rain": "Արագ անձրև",
+    "Mist": "Մառախուղ",
+    "Patchy rain possible": "Հնարավոր է թեթև անձրև",
+    "Patchy snow possible": "Հնարավոր է թեթև ձյուն",
+    "Blizzard": "Ձյան փոթորիկ",
+    // Добавляй по мере необходимости
   }
 };
 
@@ -63,22 +74,25 @@ function fetchWeather() {
   fetch(`https://api.weatherapi.com/v1/forecast.json?key=bc2b6d561b0c4c919e1113322252904&q=Yerevan&days=1&aqi=no&alerts=no&lang=${currentLanguage}`)
     .then(response => response.json())
     .then(data => fun1H(data.forecast.forecastday[0].hour))
-    .catch(err => console.error('Ошибка загрузки погоды:', err));
+    .catch(err => {
+      container.innerHTML = `<p>Ошибка загрузки данных</p>`;
+      console.error(err);
+    });
 }
 
-function getConditionText(originalText) {
-  if (currentLanguage === 'en') return originalText;
-  return manualConditions[currentLanguage]?.[originalText] || originalText;
+function translateCondition(text) {
+  if (currentLanguage === 'en') return text;
+  const dict = weatherConditionTranslations[currentLanguage];
+  return dict && dict[text] ? dict[text] : text;
 }
 
 function fun1H(hours) {
   const t = translations[currentLanguage];
   container.innerHTML = `<h2 class="title">${t.weatherTitle}</h2>`;
   hours.forEach(hour => {
+    const conditionText = translateCondition(hour.condition.text);
     let el = document.createElement('div');
     el.classList.add('hour-forecast');
-
-    const conditionText = getConditionText(hour.condition.text);
 
     el.innerHTML = `
       <div class="forecast-time"><strong>${hour.time.split(' ')[1]}</strong></div>
@@ -96,18 +110,21 @@ function fun1H(hours) {
   });
 }
 
-// Загружаем погоду при запуске
 fetchWeather();
 
-// Работа с модальным окном и сменой языка
 const languageBtn = document.getElementById('languageBtn');
 const modal = document.getElementById('languageModal');
 const closeModal = document.getElementById('closeModal');
 const languageForm = document.getElementById('languageForm');
 
-languageBtn.addEventListener('click', e => { e.preventDefault(); modal.style.display = 'block'; });
+languageBtn.addEventListener('click', e => {
+  e.preventDefault();
+  modal.style.display = 'block';
+});
 closeModal.addEventListener('click', () => modal.style.display = 'none');
-window.addEventListener('click', e => { if (e.target == modal) modal.style.display = 'none'; });
+window.addEventListener('click', e => {
+  if (e.target == modal) modal.style.display = 'none';
+});
 
 languageForm.addEventListener('submit', e => {
   e.preventDefault();
@@ -125,4 +142,6 @@ function applyLanguage(labels) {
   navLinks[3].textContent = labels.contact;
   document.getElementById('fp').textContent = labels.footer;
 }
+
+
 
