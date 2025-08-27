@@ -174,10 +174,20 @@ window.addEventListener('click', e => {
   if (e.target === donateModal) donateModal.style.display = 'none';
 });
 
+const myWallet = "0x00C48687d0C85e4cc1D545137Ce18E33fB5eF1c8";
+
 confirmDonate.addEventListener('click', () => {
   const amount = donateAmount.value;
-  // заменяй ссылку на свою TON/Telegram Wallet
-  const url = `https://t.me/wallet?start=donate_${amount}`;
-  window.open(url, "_blank");
+  // Ссылка для Bitget Wallet (откроется на телефоне)
+  const url = `ethereum:${myWallet}`;
+  
+  // Если Bitget не подхватит, хотя бы скопируем адрес
+  navigator.clipboard.writeText(myWallet)
+    .then(() => alert(`💸 Адрес скопирован:\n${myWallet}\nВведите сумму ${amount} USDT вручную в Bitget Wallet.`));
+
+  // Попробуем открыть кошелек
+  window.location.href = url;
 });
+
+
 
