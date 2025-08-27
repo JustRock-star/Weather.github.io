@@ -1,2 +1,2 @@
 # Weather.github.io
-Easy ArmeniaWeather
+Easy Armenia Weather
