@@ -134,3 +134,50 @@ function applyLanguage(labels) {
   navLinks[3].textContent = labels.contact;
   document.getElementById('fp').textContent = labels.footer;
 }
+
+// --- Language Modal ---
+const languageBtn = document.getElementById('languageBtn');
+const languageModal = document.getElementById('languageModal');
+const closeModal = document.getElementById('closeModal');
+const languageForm = document.getElementById('languageForm');
+
+languageBtn.addEventListener('click', e => {
+  e.preventDefault();
+  languageModal.style.display = 'block';
+});
+
+closeModal.addEventListener('click', () => {
+  languageModal.style.display = 'none';
+});
+
+window.addEventListener('click', e => {
+  if (e.target === languageModal) languageModal.style.display = 'none';
+});
+
+// --- Donate Modal ---
+const donateBtn = document.getElementById('donateBtn');
+const donateModal = document.getElementById('donateModal');
+const closeDonate = document.getElementById('closeDonate');
+const confirmDonate = document.getElementById('confirmDonate');
+const donateAmount = document.getElementById('donateAmount');
+
+donateBtn.addEventListener('click', e => {
+  e.preventDefault();
+  donateModal.style.display = 'block';
+});
+
+closeDonate.addEventListener('click', () => {
+  donateModal.style.display = 'none';
+});
+
+window.addEventListener('click', e => {
+  if (e.target === donateModal) donateModal.style.display = 'none';
+});
+
+confirmDonate.addEventListener('click', () => {
+  const amount = donateAmount.value;
+  // заменяй ссылку на свою TON/Telegram Wallet
+  const url = `https://t.me/wallet?start=donate_${amount}`;
+  window.open(url, "_blank");
+});
+
