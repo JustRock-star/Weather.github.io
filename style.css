@@ -46,6 +46,7 @@ nav ul li a {
 nav ul li a:hover {
     color: #e74c3c;
 }
+
 #fp {
     font-size: 14px;
     color: #555;
@@ -131,3 +132,90 @@ nav ul li a:hover {
     font-weight: bold;
     cursor: pointer;
 }
+
+/* ------------------ Адаптивные стили ------------------ */
+
+/* Для экранов мобильных устройств (ширина меньше 768px) */
+@media (max-width: 768px) {
+    #logo {
+        font-size: 20px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav ul li a {
+        font-size: 16px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .title {
+        font-size: 22px;
+    }
+
+    .hour-forecast {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .forecast-time, .forecast-temp, .forecast-condition {
+        font-size: 16px;
+    }
+
+    .forecast-details p {
+        font-size: 12px;
+    }
+
+    .forecast-icon {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Для еще более маленьких экранов (например, телефоны в портретном режиме) */
+@media (max-width: 480px) {
+    #logo {
+        font-size: 18px;
+    }
+
+    nav ul {
+        gap: 10px;
+    }
+
+    nav ul li a {
+        font-size: 14px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .hour-forecast {
+        padding: 10px;
+    }
+
+    .forecast-time, .forecast-temp, .forecast-condition {
+        font-size: 14px;
+    }
+
+    .forecast-details p {
+        font-size: 10px;
+    }
+
+    .forecast-icon {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+
+
