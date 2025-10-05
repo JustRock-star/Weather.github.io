@@ -96,8 +96,8 @@ color: #333;
 font-size: 18px;
 color: #e74c3c;
 position: absolute;
-top: 70%;
-left: 50%;
+top: 75%;
+left: 6%;
 transform: translate(-50%, -50%);
 }
 
@@ -260,5 +260,6 @@ nav ul li a {
   background-color: #d4edda; /* Зеленый фон для текущего часа */
   border: 2px solid #28a745; /* Зеленая граница */
 }
+
 
 
