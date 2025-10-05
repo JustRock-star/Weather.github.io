@@ -1,54 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Forecast</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Forecast</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1 id="logo">LOGOTYPE</h1>
-        <nav>
-            <ul>
-                <li><a href="#City">Armenian Regions</a></li>
-                <li><a href="#" id="languageBtn">Language</a></li>
-                <li><a href="#Account">Account</a></li>
-                <li><a href="#Donate">Donate</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <h1 id="logo">LOGOTYPE</h1>
+    <nav>
+      <ul>
+        <li><a href="#" id="regionsBtn">Armenian Regions</a></li>
+        <li><a href="#" id="languageBtn">Language</a></li>
+        <li><a href="#" id="accountBtn">Account And Admin</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <div class="container"></div>
+  <div class="container"></div>
 
-    <!-- Language Modal -->
-    <div id="languageModal" class="modal">
-        <div class="modal-content">
-            <h3>Select Language</h3>
-            <form id="languageForm">
-                <label><input type="radio" name="language" value="en" checked> English</label><br>
-                <label><input type="radio" name="language" value="ru"> Русский</label><br>
-                <label><input type="radio" name="language" value="hy"> Հայերեն</label><br><br>
-                <button type="submit">Apply</button>
-                <button type="button" id="closeModal">Cancel</button>
-            </form>
-        </div>
+  <!-- Language Modal -->
+  <div id="languageModal" class="modal">
+    <div class="modal-content">
+      <h3>Select Language</h3>
+      <form id="languageForm">
+        <label><input type="radio" name="language" value="en" checked> English</label><br>
+        <label><input type="radio" name="language" value="ru"> Русский</label><br>
+        <label><input type="radio" name="language" value="hy"> Հայերեն</label><br><br>
+        <button type="submit">Apply</button>
+        <button type="button" class="closeModal">Cancel</button>
+      </form>
     </div>
+  </div>
 
-    <footer>
-        <p id="fp">ALL IS GOOD ©</p>
-    </footer>
+  <!-- Regions Modal -->
+  <div id="regionsModal" class="modal">
+    <div class="modal-content">
+      <h3>Select Armenian Region</h3>
+      <select id="regionSelect">
+        <option value="Yerevan">Yerevan</option>
+        <option value="Gyumri">Gyumri</option>
+        <option value="Vanadzor">Vanadzor</option>
+        <option value="Kapan">Kapan</option>
+        <option value="Gavar">Gavar</option>
+        <option value="Hrazdan">Hrazdan</option>
+        <option value="Ijevan">Ijevan</option>
+        <option value="Armavir">Armavir</option>
+      </select>
+      <br><br>
+      <button id="applyRegion">Apply</button>
+      <button type="button" class="closeModal">Cancel</button>
+    </div>
+  </div>
 
-    <script src="script.js"></script>
+  <!-- Account Modal -->
+  <div id="accountModal" class="modal">
+    <div class="modal-content">
+      <h3>Account</h3>
+      <form id="accountForm">
+        <input type="email" id="email" placeholder="Email" required><br><br>
+        <input type="password" id="password" placeholder="Password" required><br><br>
+        <button type="submit">Login / Register</button>
+        <button type="button" class="closeModal">Cancel</button>
+      </form>
+      <div id="usersList" style="display:none; margin-top:20px;">
+        <h4>Registered Users:</h4>
+        <ul id="usersUl"></ul>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p id="fp">ALL IS GOOD ©</p>
+  </footer>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
