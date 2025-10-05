@@ -205,8 +205,9 @@ nav ul li a {
 }
 
 .forecast-icon {
-  width: 40px;
-  height: 40px;
+  width: 70px;
+  height: 70px;
+  margin-left: 150px;
 }
 }
 
@@ -230,8 +231,10 @@ nav ul li a {
 }
 
 .forecast-icon {
-  width: 35px;
-  height: 35px;
+  width: 55px;
+  height: 55px;
+  margin-left: 130px;
+  
 }
 
 .modal-content {
@@ -252,3 +255,4 @@ nav ul li a {
   margin-top: 8px;
 }
 }
+
