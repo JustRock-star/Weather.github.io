@@ -3,14 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let db = null;
   try {
     if (window.firebase && firebase.initializeApp) {
-      const firebaseConfig = {
-        apiKey: "AIzaSyCOQ9xpTevdg5pcftlW5pwmRAGyxCJCnzc",
-        authDomain: "weatherweb-31252.firebaseapp.com",
-        projectId: "weatherweb-31252",
-        storageBucket: "weatherweb-31252.firebasestorage.app",
-        messagingSenderId: "474393026157",
-        appId: "1:474393026157:web:5f4dda86b71217d768a964"
-      };
+      const firebaseConfig = {};
       try { firebase.initializeApp(firebaseConfig); } catch(e){}
       if (firebase.database) db = firebase.database();
     }
@@ -336,3 +329,4 @@ document.addEventListener('DOMContentLoaded', () => {
   applyLanguage(translations[currentLanguage]);
   fetchWeather();
 });
+
