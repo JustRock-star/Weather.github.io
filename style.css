@@ -229,6 +229,10 @@ nav ul li a {
 .forecast-condition {
   font-size: 14px;
 }
+.forecast-temp {
+  position: absolute;
+  left: 12%;
+}
 
 .forecast-icon {
   width: 70px;
@@ -260,6 +264,7 @@ nav ul li a {
   background-color: #d4edda; /* Зеленый фон для текущего часа */
   border: 2px solid #28a745; /* Зеленая граница */
 }
+
 
 
 
