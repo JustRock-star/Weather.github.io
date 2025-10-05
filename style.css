@@ -201,13 +201,12 @@ nav ul li a {
 }
 
 .forecast-details p {
-  font-size: 25px;
+  font-size: 13px;
 }
 
 .forecast-icon {
-  width: 100px;
-  height: 100px;
-  margin-left: 300px;
+  width: 40px;
+  height: 40px;
 }
 }
 
@@ -227,12 +226,12 @@ nav ul li a {
 .forecast-time,
 .forecast-temp,
 .forecast-condition {
-  font-size: 20px;
+  font-size: 14px;
 }
 
 .forecast-icon {
-  width: 100px;
-  height: 100px;
+  width: 35px;
+  height: 35px;
 }
 
 .modal-content {
@@ -253,7 +252,3 @@ nav ul li a {
   margin-top: 8px;
 }
 }
-
-
-
-
