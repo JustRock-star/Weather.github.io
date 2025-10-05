@@ -205,9 +205,9 @@ nav ul li a {
 }
 
 .forecast-icon {
-  width: 70px;
-  height: 70px;
-  margin-left: 300px;
+  width: 80px;
+  height: 80px;
+  margin-left: 400px;
 }
 }
 
@@ -231,9 +231,9 @@ nav ul li a {
 }
 
 .forecast-icon {
-  width: 55px;
-  height: 55px;
-  margin-left: 200px;
+  width: 70px;
+  height: 70px;
+  margin-left: 250px;
   
 }
 
@@ -260,3 +260,4 @@ nav ul li a {
   background-color: #d4edda; /* Зеленый фон для текущего часа */
   border: 2px solid #28a745; /* Зеленая граница */
 }
+
