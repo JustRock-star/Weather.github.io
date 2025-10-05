@@ -83,6 +83,7 @@ padding: 15px;
 margin-bottom: 10px;
 box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 flex-wrap: wrap;
+position: relative;
 }
 
 .forecast-time {
@@ -94,10 +95,14 @@ color: #333;
 .forecast-temp {
 font-size: 18px;
 color: #e74c3c;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
 }
 
 .forecast-condition {
-font-size: 16px;
+font-size: 25px;
 color: #555;
 }
 
@@ -112,7 +117,7 @@ margin-top: 5px;
 .forecast-icon {
 width: 100px;
 height: 100px;
-margin-left: 500px;
+margin-left: 650px;
 }
 
 /* MODAL — ИСПРАВЛЕНО */
@@ -196,12 +201,13 @@ nav ul li a {
 }
 
 .forecast-details p {
-  font-size: 13px;
+  font-size: 25px;
 }
 
 .forecast-icon {
-  width: 40px;
-  height: 40px;
+  width: 100px;
+  height: 100px;
+  margin-left: 300px;
 }
 }
 
@@ -221,12 +227,12 @@ nav ul li a {
 .forecast-time,
 .forecast-temp,
 .forecast-condition {
-  font-size: 14px;
+  font-size: 20px;
 }
 
 .forecast-icon {
-  width: 35px;
-  height: 35px;
+  width: 100px;
+  height: 100px;
 }
 
 .modal-content {
@@ -247,7 +253,6 @@ nav ul li a {
   margin-top: 8px;
 }
 }
-
 
 
 
